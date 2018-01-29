@@ -1,6 +1,4 @@
-#include <vector>
 #include <ROOT/TDataFrame.hxx>
-#include <TCanvas.h>
 using namespace ROOT::Experimental;
 
 template <typename TDF, typename OP>
