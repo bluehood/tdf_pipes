@@ -1,14 +1,20 @@
 #include <ROOT/TDataFrame.hxx>
 using namespace ROOT::Experimental;
 
-template <typename TDF, typename OP>
-auto operator|(TDF &d, OP &&op) -> decltype(op(d))
+template <typename Node, typename Op>
+auto operator|(TDF::TInterface<Node> &&d, Op &&op) -> decltype(op(std::forward<TDF::TInterface<Node>>(d)))
 {
-   return op(d);
+   return op(std::forward<TDF::TInterface<Node>>(d));
 }
 
-template <typename TDF, typename OP>
-auto operator|(TDF &&d, OP &&op) -> decltype(op(d))
+template <typename Op>
+auto operator|(TDataFrame &&d, Op &&op) -> decltype(op(std::move(d)))
+{
+   return op(std::move(d));
+}
+
+template <typename Op>
+auto operator|(TDataFrame &d, Op &&op) -> decltype(op(d))
 {
    return op(d);
 }
